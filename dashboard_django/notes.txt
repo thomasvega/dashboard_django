@@ -1,0 +1,10 @@
+- Never touch manage.py
+
+- Inside folder dashboard_django we have :
+	. wsgi.py file, it's a webserver that django will set up for us
+	. urls.py file, it's an url routing system. A list of paths.
+	. settings.py file, main configuration to django app.
+
+- Start django server : python manage.py runserver (inside the project of course)
+
+
