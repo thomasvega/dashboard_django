@@ -13,3 +13,17 @@
 	add load static inside base.html
 	link href={% static 'link/to/css/file'%}
 
+- Adding image :
+	go to settings.py
+	add MEDIA_URL = '/images/'
+	add load static inside the file where you put the image
+
+- Migrate database :
+	python manage.py migrate
+
+- Creating a super user :
+	python manage.py createsuperuser
+	this will give us the oportunity to go over admin panel
+
+- When creating a new model inside model.py, we need to use a new command line :
+python manage.py makemigrations then python manage.py migrate then register it inside amin pannel by going inside admin.py adding the models like so from .models import Customer and then admin.site.register(Customer) 
