@@ -1,5 +1,43 @@
 {% extends 'accounts/base.html' %}
 
 {% block content %}
-<h1>DASHBOARD</h1>
+
+
+<div class="container">
+    
+    {% include 'accounts/status.html' %}
+
+    <div class="row">
+        <div class="col-5">
+            <h5>Customers : </h5>
+            <hr>
+            <div class="card card-body">
+                <a href="" class="btn btn-primary">Create customer</a>
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th>Customer</th>
+                        <th>Orders</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-7">
+            <h5>Last 5 orders </h5>
+            <hr>
+            <div class="card card-body">
+                <a href="" class="btn btn-primary">Create order</a>
+                <table class="table">
+                    <tr>
+                        <th>Product</th>
+                        <th>Date OrderId</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
