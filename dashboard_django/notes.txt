@@ -26,4 +26,9 @@
 	this will give us the oportunity to go over admin panel
 
 - When creating a new model inside model.py, we need to use a new command line :
-python manage.py makemigrations then python manage.py migrate then register it inside amin pannel by going inside admin.py adding the models like so from .models import Customer and then admin.site.register(Customer) 
+python manage.py makemigrations then python manage.py migrate then register it inside amin pannel by going inside admin.py adding the models like so from .models import Customer and then admin.site.register(Customer)
+
+
+!!!! FORGOT TO LINK MY ADRESS MAIL TO THE GITHUB ACCOUNT DIDN'T COUNT MY CONTRIBUTION FROM YESTERDAY !!!!
+
+ 
