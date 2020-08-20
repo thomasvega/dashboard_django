@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import *
@@ -44,7 +44,16 @@ def createOrder(request):
         form = OrderForm(request.POST)
         if form.is_valid:
             form.save() # Model form will handle the saving inside the database
+            return redirect('/')
 
     data = {'form' : form}
+
+    return render(request, 'accounts/order_form.html', data)
+
+def updateOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    form = OrderForm(instance=order)
+
+    data = {'form': form}
 
     return render(request, 'accounts/order_form.html', data)
