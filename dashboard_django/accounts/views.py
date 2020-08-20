@@ -41,7 +41,10 @@ def customer(request, pk):
 def createOrder(request):
     form = OrderForm()
     if request.method == 'POST':
-        print(request.POST)
+        form = OrderForm(request.POST)
+        if form.is_valid:
+            form.save() # Model form will handle the saving inside the database
+
     data = {'form' : form}
 
     return render(request, 'accounts/order_form.html', data)
