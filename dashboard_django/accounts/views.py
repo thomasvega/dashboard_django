@@ -38,6 +38,7 @@ def customer(request, pk):
 
     return render(request, 'accounts/customer.html', data)
 
+
 def createOrder(request):
     form = OrderForm()
     if request.method == 'POST':
@@ -50,10 +51,27 @@ def createOrder(request):
 
     return render(request, 'accounts/order_form.html', data)
 
+
 def updateOrder(request, pk):
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
-
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order) # adding instance to make sure it will not create a new one but will update
+        if form.is_valid:
+            form.save() # Model form will handle the saving inside the database
+            return redirect('/')
     data = {'form': form}
 
     return render(request, 'accounts/order_form.html', data)
+
+
+def deleteOrder(request, pk):
+    order = Order.objects.get(id=pk)
+
+    if request.method == "POST":
+        order.delete()
+        return redirect('/')
+
+    data = {'item': order}
+
+    return render(request, 'accounts/delete.html', data)
