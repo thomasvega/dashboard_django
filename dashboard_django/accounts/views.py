@@ -4,6 +4,13 @@ from django.forms import inlineformset_factory
 from .models import *
 from .forms import *
 
+"""
+    This file will contain methods with intelligence 
+    that will render a template with or without data.
+
+    Those methods can be connected with the database
+"""
+
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
