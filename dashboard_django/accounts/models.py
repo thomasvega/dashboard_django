@@ -2,6 +2,11 @@ from django.db import models
 
 # Create your models here.
 
+"""
+    This is the model file.
+    The models are used for the database. It creates table and columns.
+"""
+
 class Customer(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=10, null=True)
