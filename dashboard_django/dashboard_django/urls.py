@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+"""
+    Main url file. 
+    It gives the possibility to go to admin and also to
+    go to the other urls that reference to accounts
+"""
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
