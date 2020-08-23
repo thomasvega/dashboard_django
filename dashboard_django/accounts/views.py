@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from .models import *
 from .forms import *
+from .filters import OrderFilter
 
 """
     This file will contain methods with intelligence 
@@ -42,7 +43,16 @@ def customer(request, pk):
 
     total_orders = orders.count()
 
-    data = {'customer': customer, 'total_orders': total_orders, 'orders': orders}
+    order_filter = OrderFilter(request.GET, queryset=orders)
+
+    orders = order_filter.qs
+
+    data = {
+        'customer': customer, 
+        'total_orders': total_orders, 
+        'orders': orders,
+        'order_filter': order_filter,
+    }
 
     return render(request, 'accounts/customer.html', data)
 
