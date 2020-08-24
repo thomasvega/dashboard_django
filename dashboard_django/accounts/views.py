@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import *
 from .forms import *
 from .filters import OrderFilter
@@ -11,6 +13,20 @@ from .filters import OrderFilter
 
     Those methods can be connected with the database
 """
+
+def loginPage(request):
+    return render(request, 'accounts/login.html')
+
+def registerPage(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context = {'form': form}
+    return render(request, 'accounts/register.html', context)
 
 def home(request):
     orders = Order.objects.all()
@@ -97,3 +113,5 @@ def deleteOrder(request, pk):
     data = {'item': order}
 
     return render(request, 'accounts/delete.html', data)
+
+
