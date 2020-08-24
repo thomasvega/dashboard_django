@@ -4,7 +4,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import *
-from .forms import *
+from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
 
 """
@@ -18,10 +18,10 @@ def loginPage(request):
     return render(request, 'accounts/login.html')
 
 def registerPage(request):
-    form = UserCreationForm()
+    form = CreateUserForm()
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
 
