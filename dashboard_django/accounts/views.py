@@ -20,6 +20,11 @@ from .filters import OrderFilter
 
 
 def registerPage(request):
+    """
+        This method will permit the use to register to the app
+        We created a specific class to change default registration of django
+        called CreateUserForm()
+    """
     # Bad way to do this, but it permit us to understand how it works
     if request.user.is_authenticated:
         return redirect('home')
@@ -38,9 +43,13 @@ def registerPage(request):
 
 
 def loginPage(request):
-    # Bad way to do this, but it permit us to understand how it works
+    """
+        Login method to authenticate the user
+        It use modules of django
+    """
+    
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('home')# Bad way to do this, but it permit us to understand how it works
 
     if request.method == 'POST':
         username = request.POST.get('username')
