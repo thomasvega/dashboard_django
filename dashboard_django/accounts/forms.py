@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 
 from .models import *
 
+"""
+    This file is used to create specific form
+    We can change the fields if want specific  input and not all input check createUserForm for a better understanding
+"""
+
 class OrderForm(ModelForm):
     class Meta:
         model = Order
