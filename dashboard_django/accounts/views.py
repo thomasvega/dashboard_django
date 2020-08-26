@@ -66,6 +66,9 @@ def loginPage(request):
     return render(request, 'accounts/login.html', context)
 
 def logoutUser(request):
+    """
+        Logout the user using the logout method from django
+    """
     logout(request)
     return redirect('login')
 
