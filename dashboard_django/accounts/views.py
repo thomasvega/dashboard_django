@@ -74,6 +74,9 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def home(request):
+    """
+    Protected route with decorator login_required. The user will be redirected if the user isn't connected
+    """
     orders = Order.objects.all()
     customers = Customer.objects.all()
 
@@ -83,42 +86,36 @@ def home(request):
     delivered = orders.filter(status='Delivered').count()
     pending = orders.filter(status='Pending').count()
 
-    datas = {
-        'orders': orders, 
-        'customers': customers,
-        'total_customers': total_customers,
-        'total_orders': total_orders,
-        'delivered': delivered,
-        'pending': pending,
-    }
+    datas = { 'orders': orders, 'customers': customers, 'total_customers': total_customers, 'total_orders': total_orders, 'delivered': delivered, 'pending': pending, }
 
     return render(request, 'accounts/dashboard.html', datas)
 
 def products(request):
+    """
+    Retrieving all products
+    """
     products = Product.objects.all()
     return render(request, 'accounts/products.html', {'products': products})
 
+
 def customer(request, pk):
+    """
+    Retrieving all customer with total orders, orders and order filter 
+    """
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
-
     total_orders = orders.count()
-
     order_filter = OrderFilter(request.GET, queryset=orders)
-
     orders = order_filter.qs
-
-    data = {
-        'customer': customer, 
-        'total_orders': total_orders, 
-        'orders': orders,
-        'order_filter': order_filter,
-    }
-
+    data = { 'customer': customer, 'total_orders': total_orders, 'orders': orders, 'order_filter': order_filter, }
     return render(request, 'accounts/customer.html', data)
+
 
 # TODO I NEED TO CHECK OUT THIS AGAIN .. 
 def createOrder(request, pk):
+    """
+    Creating an order by getting the customer id from primary key
+    """
     OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status')) # Need to gives the parent and child model
     customer = Customer.objects.get(id=pk)
     formset = OrderFormSet(instance=customer)
@@ -136,6 +133,9 @@ def createOrder(request, pk):
 
 
 def updateOrder(request, pk):
+    """
+    Updating the order with django URL using post method and passing the primary key
+    """
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
     if request.method == 'POST':
@@ -149,6 +149,10 @@ def updateOrder(request, pk):
 
 
 def deleteOrder(request, pk):
+    """
+        Deleting order with django orm
+        Passing the primary key to be able to delete it
+    """
     order = Order.objects.get(id=pk)
 
     if request.method == "POST":
@@ -158,5 +162,4 @@ def deleteOrder(request, pk):
     data = {'item': order}
 
     return render(request, 'accounts/delete.html', data)
-
 
