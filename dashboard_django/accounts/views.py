@@ -90,6 +90,12 @@ def home(request):
 
     return render(request, 'accounts/dashboard.html', datas)
 
+
+def userPage(request):
+    context = {}
+    return render(request, 'accounts/user.html', context)
+
+
 def products(request):
     """
     Retrieving all products
