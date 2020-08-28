@@ -5,12 +5,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
-from .decorators import unauthenticated_user, allowed_users
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
 """
     This file will contain methods with intelligence 
@@ -30,9 +31,11 @@ def registerPage(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for ' + user)
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            group = Group.objects.get(name='customer')
+            user.groups.add(group)
+            messages.success(request, 'Account was created for ' + username)
             return redirect('login')
 
     context = {'form': form}
@@ -66,7 +69,7 @@ def logoutUser(request):
     return redirect('login')
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
+@admin_only
 def home(request):
     """
     Protected route with decorator login_required. The user will be redirected if the user isn't connected
@@ -90,6 +93,8 @@ def userPage(request):
     return render(request, 'accounts/user.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def products(request):
     """
     Retrieving all products
@@ -98,6 +103,8 @@ def products(request):
     return render(request, 'accounts/products.html', {'products': products})
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def customer(request, pk):
     """
     Retrieving all customer with total orders, orders and order filter 
@@ -112,6 +119,8 @@ def customer(request, pk):
 
 
 # TODO I NEED TO CHECK OUT THIS AGAIN .. 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
     """
     Creating an order by getting the customer id from primary key
@@ -132,6 +141,8 @@ def createOrder(request, pk):
     return render(request, 'accounts/order_form.html', data)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def updateOrder(request, pk):
     """
     Updating the order with django URL using post method and passing the primary key
@@ -148,6 +159,8 @@ def updateOrder(request, pk):
     return render(request, 'accounts/order_form.html', data)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deleteOrder(request, pk):
     """
         Deleting order with django orm
