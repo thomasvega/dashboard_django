@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
+from .decorators import unauthenticated_user
 
 """
     This file will contain methods with intelligence 
@@ -41,7 +42,7 @@ def registerPage(request):
     context = {'form': form}
     return render(request, 'accounts/register.html', context)
 
-
+@unauthenticated_user
 def loginPage(request):
     """
         Login method to authenticate the user
