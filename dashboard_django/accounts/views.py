@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, allowed_users
 
 """
     This file will contain methods with intelligence 
@@ -19,17 +19,13 @@ from .decorators import unauthenticated_user
     Those methods can be connected with the database
 """
 
-
+@unauthenticated_user
 def registerPage(request):
     """
         This method will permit the use to register to the app
         We created a specific class to change default registration of django
         called CreateUserForm()
     """
-    # Bad way to do this, but it permit us to understand how it works
-    if request.user.is_authenticated:
-        return redirect('home')
-
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -48,10 +44,6 @@ def loginPage(request):
         Login method to authenticate the user
         It use modules of django
     """
-    
-    if request.user.is_authenticated:
-        return redirect('home')# Bad way to do this, but it permit us to understand how it works
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -74,6 +66,7 @@ def logoutUser(request):
     return redirect('login')
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def home(request):
     """
     Protected route with decorator login_required. The user will be redirected if the user isn't connected
