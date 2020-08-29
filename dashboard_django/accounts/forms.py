@@ -9,6 +9,12 @@ from .models import *
     This file is used to create specific form
     We can change the fields if want specific  input and not all input check createUserForm for a better understanding
 """
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+        exclude = ['user']
+
 
 class OrderForm(ModelForm):
     class Meta:

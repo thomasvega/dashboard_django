@@ -123,6 +123,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/images/'
+
 STATICFILES_DIRS = [
     Path(BASE_DIR, 'static')
 ]
+
+# Telling where to save the images
+MEDIA_ROOT = Path(BASE_DIR, 'static/images')
